@@ -17,5 +17,5 @@ import "phoenix_html"
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
 
-import TodoList from './todoList';
+import TodoList from './TodoList';
 render((<TodoList />), document.body);
