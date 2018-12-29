@@ -29,7 +29,7 @@ defmodule SharedTodo.DataCase do
     #:ok = Ecto.Adapters.SQL.Sandbox.checkout(SharedTodo.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(SharedTodo.Repo, {:shared, self()})
+      # Ecto.Adapters.SQL.Sandbox.mode(SharedTodo.Repo, {:shared, self()})
     end
 
     :ok
@@ -43,11 +43,11 @@ defmodule SharedTodo.DataCase do
       assert %{password: ["password is too short"]} = errors_on(changeset)
 
   """
-  def errors_on(changeset) do
-    Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
-      Enum.reduce(opts, message, fn {key, value}, acc ->
-        String.replace(acc, "%{#{key}}", to_string(value))
-      end)
-    end)
-  end
+  #def errors_on(changeset) do
+    #Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
+     # Enum.reduce(opts, message, fn {key, value}, acc ->
+      #  String.replace(acc, "%{#{key}}", to_string(value))
+      #end)
+    #end)
+  #end
 end
