@@ -1,7 +1,7 @@
-import { h, render, Component } from 'preact';
+import { h, Component } from 'preact';
 
 interface State {
-    todos: Array<any> | [],
+    todos: Array<string>,
     text: string
 }
 
@@ -23,12 +23,10 @@ export default class TodoList extends Component {
             <form onSubmit={this.addTodo} action="javascript:">
                 <input value={text} onInput={this.setText} />
                 <button type="submit">Add</button>
-                <ul>{/*
-
-                    { todos.map( (todo: any) => (
-                        <li>{todo.text}</li>
-                        )) }
-                    */}
+                <ul>
+                    { todos.map((todo) => (
+                        <li>{todo}</li>
+                    ))}
                 </ul>
             </form>
         );
