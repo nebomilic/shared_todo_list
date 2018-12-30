@@ -1,15 +1,14 @@
 import { h, Component } from 'preact';
 
 interface State {
-    todos: Array<string>,
+    todos: string[],
     text: string
 }
 
 export default class TodoList extends Component {
     state: State = { todos: [], text: '' };
-    setText = (e: any) => {
+    setText = (e: any) => 
         this.setState({ text: e.target.value });
-    };
 
     addTodo = () => {
         const { todos, text } = this.state;
@@ -18,17 +17,17 @@ export default class TodoList extends Component {
     };
 
     render() {
-        const {todos, text} = this.state;
+        const { todos, text } = this.state;
         return (
-            <form onSubmit={this.addTodo} action="javascript:">
+            <div>
                 <input value={text} onInput={this.setText} />
-                <button type="submit">Add</button>
+                <button onClick={this.addTodo}>Add</button>
                 <ul>
-                    { todos.map((todo) => (
+                    {todos.map((todo) => (
                         <li>{todo}</li>
                     ))}
                 </ul>
-            </form>
+            </div>
         );
     }
 }
