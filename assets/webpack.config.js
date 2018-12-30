@@ -6,15 +6,16 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, options) => ({
+  // dev settings
+  mode: 'development',
+  devtool: 'cheap-module-eval-source-map',
   optimization: {
     minimizer: [
       new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: false }),
       new OptimizeCSSAssetsPlugin({})
     ]
   },
-  entry: {
-      './js/app.js': ['./js/app.js'].concat(glob.sync('./vendor/**/*.js'))
-  },
+  entry: './ts/app.tsx',
   output: {
     filename: 'app.js',
     path: path.resolve(__dirname, '../priv/static/js')
@@ -22,7 +23,7 @@ module.exports = (env, options) => ({
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.ts(x?)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
@@ -33,6 +34,9 @@ module.exports = (env, options) => ({
         use: [MiniCssExtractPlugin.loader, 'css-loader']
       }
     ]
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.json']
   },
   plugins: [
     new MiniCssExtractPlugin({ filename: '../css/app.css' }),
