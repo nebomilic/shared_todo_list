@@ -10,14 +10,15 @@ import { h, render } from 'preact';
 //
 // Import dependencies
 //
-import "phoenix_html"
+import 'phoenix_html'
 
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:
-// import socket from "./socket"
-
+import {connectToChannel} from './socket'
 import TodoList from './TodoList';
+
+connectToChannel('todo:edit');
 const appElement: any = document.querySelector('#app');
 if (appElement) {
     render((<TodoList />), appElement);
