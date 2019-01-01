@@ -63,11 +63,11 @@ import {Socket} from 'phoenix'
 // export default socket
 
 export const connectToChannel = (channelName : string) => {
-  const socket = new Socket('/socket', {params: {token: (window as any).userToken}})
+  const socket = new Socket('/socket', {params: {token: (window as any).userToken}});
   socket.connect();
-  const channel = socket.channel(channelName, {})
+  const channel = socket.channel(channelName, {});
   return channel.join()
-  .receive('ok', resp => { console.log('Joined successfully', resp) })
-  .receive('error', resp => { console.log('Unable to join', resp) })
+  .receive('ok', ( resp : object ) => { console.log('Joined successfully', resp) })
+  .receive('error', ( resp : object ) => { console.log('Unable to join', resp) })
 
 }

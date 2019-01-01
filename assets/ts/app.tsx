@@ -15,11 +15,9 @@ import 'phoenix_html'
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:
-import {connectToChannel} from './socket'
-import TodoList from './TodoList';
+import SharedTodoList from './containers/SharedTodoList';
 
-connectToChannel('todo:edit');
 const appElement: any = document.querySelector('#app');
 if (appElement) {
-    render((<TodoList />), appElement);
+    render((<SharedTodoList />), appElement);
 }

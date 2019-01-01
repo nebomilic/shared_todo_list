@@ -11,7 +11,8 @@ defmodule SharedTodo.Application do
       # Start the Ecto repository
      # SharedTodo.Repo,
       # Start the endpoint when the application starts
-      SharedTodoWeb.Endpoint
+      SharedTodoWeb.Endpoint,
+      {Bacchus.State, name: :state}
       # Starts a worker by calling: SharedTodo.Worker.start_link(arg)
       # {SharedTodo.Worker, arg},
     ]
