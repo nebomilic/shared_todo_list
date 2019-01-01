@@ -12,7 +12,7 @@ defmodule SharedTodo.Application do
      # SharedTodo.Repo,
       # Start the endpoint when the application starts
       SharedTodoWeb.Endpoint,
-      {Bacchus.State, name: :state}
+      {SharedTodo.State, name: :state}
       # Starts a worker by calling: SharedTodo.Worker.start_link(arg)
       # {SharedTodo.Worker, arg},
     ]

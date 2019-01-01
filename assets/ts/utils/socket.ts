@@ -6,7 +6,7 @@
 //
 // Pass the token on params as below. Or remove it
 // from the params if you are not using authentication.
-import {Socket} from 'phoenix'
+import {Socket, Channel} from 'phoenix'
 
 // const socket = new Socket('/socket', {params: {token: (window as any).userToken}})
 
@@ -62,12 +62,12 @@ import {Socket} from 'phoenix'
 
 // export default socket
 
-export const connectToChannel = (channelName : string) => {
+export const connectToChannel = (channelName : string) : Channel => {
   const socket = new Socket('/socket', {params: {token: (window as any).userToken}});
   socket.connect();
   const channel = socket.channel(channelName, {});
-  return channel.join()
+  channel.join()
   .receive('ok', ( resp : object ) => { console.log('Joined successfully', resp) })
   .receive('error', ( resp : object ) => { console.log('Unable to join', resp) })
-
+  return channel;
 }
