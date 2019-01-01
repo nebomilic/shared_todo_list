@@ -22,7 +22,12 @@ export interface State {
 export default class SharedTodoList extends Component {
     
     loadExistingTodos = () => {
-    
+        const initTodos : Array<TodoItem> = [
+            {id:0, text: 'Finish backend', status: TodoStatus.TODO},
+            {id:0, text: 'Introduce immutable.js', status: TodoStatus.TODO},
+            {id:0, text: 'Make frontend PWA', status: TodoStatus.TODO}
+        ];
+        this.setState({todos: initTodos});
     }
 
     addTodo = (text: string) => {
@@ -35,6 +40,7 @@ export default class SharedTodoList extends Component {
    
     componentWillMount() {
         connectToChannel(`${TOPIC}:${SUBTOPIC}`);
+        this.loadExistingTodos();
     }
 
     render() {
