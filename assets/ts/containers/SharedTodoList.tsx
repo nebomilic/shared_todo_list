@@ -26,17 +26,15 @@ export default class SharedTodoList extends Component {
     channel: Channel = connectToChannel(`${TOPIC}:${SUBTOPIC}`);
 
     loadExistingTodos = () => {
-        const initTodos : Array<Todo> = [
-            {id:0, text: 'Finish backend', status: TodoStatus.TODO},
-            {id:0, text: 'Introduce immutable.js', status: TodoStatus.TODO},
-            {id:0, text: 'Make frontend PWA', status: TodoStatus.TODO}
-        ];
+        
         this.channel.push('get_all_todos', {}, 10000) 
-                    .receive('ok', (msg) => console.log('created message', msg) )
+                    .receive('ok', (msg: any) => {
+                        const todos:Array<Todo> = (JSON.parse(msg.body) as Array<Todo>);
+                        this.setState({todos: todos});
+                    })
                     .receive('error', (reasons) => console.log('create failed', reasons) )
                     .receive('timeout', () => console.log('Networking issue...') )
 
-        this.setState({todos: initTodos});
     }
 
     addTodo = (text: string) => {

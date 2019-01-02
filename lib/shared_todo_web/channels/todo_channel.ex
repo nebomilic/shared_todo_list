@@ -16,8 +16,8 @@ defmodule SharedTodoWeb.TodoChannel do
     broadcasts the new todo element
   """
   def handle_in("add_todo", %{"todo_text" => todo_text}, socket) do
-    #SharedTodo.State.add_todo(:state, todo_text)
     new_todo =  %Todo{text: todo_text}
+    SharedTodo.State.add_todo(:state, new_todo)
     broadcast!(socket, "added_todo", %{body: Poison.encode!(new_todo)})
     {:noreply, socket}
   end
@@ -36,9 +36,8 @@ defmodule SharedTodoWeb.TodoChannel do
     returns all todos from the state, doesn't dispatch anything
   """
   def handle_in("get_all_todos", _, socket) do
-    #broadcast!(socket, "new_msg", %{body: body})
-    #push(socket, "get_all_todos", %{id: 1, content: "All is good"})
-    {:reply, {:ok, %{msg: "all good!"}}, socket}
+    {_, all_todos} = SharedTodo.State.get_all_todos(:state)
+    {:reply, {:ok, %{body: Poison.encode!(all_todos)}}, socket}
   end
   
 end
