@@ -5,7 +5,7 @@ import { TOPIC, SUBTOPIC } from '../config';
 import { Channel } from 'phoenix';
 
 export interface Todo {
-    id: number,
+    id: string,
     text: string,
     status: TodoStatus
 }
@@ -43,6 +43,13 @@ export default class SharedTodoList extends Component {
         .receive('error', (reasons) => console.log('create failed', reasons) )
         .receive('timeout', () => console.log('Networking issue...') )
     }
+
+    deleteTodo = (id: string) => {
+        this.channel.push('delete_todo', {todo_id: id}, 10000) 
+        .receive('ok', (msg) => console.log('created message', msg) )
+        .receive('error', (reasons) => console.log('create failed', reasons) )
+        .receive('timeout', () => console.log('Networking issue...') )
+    }
     
     
     componentWillMount() {
@@ -54,12 +61,18 @@ export default class SharedTodoList extends Component {
             this.setState({ todos: updatedTodos });
             console.log('New todo added');
         } )
-        this.channel.on('deleted_todo', ( msg: any)  => console.log('Todo was deleted', msg) )
+        this.channel.on('deleted_todo', ( msg: any)  => {
+            const deletedTodoId:string = msg.body;
+            const updatedTodos = this.state.todos.filter((item) => item.id !== deletedTodoId);
+            this.setState({ todos: updatedTodos });
+            console.log('A todo was deleted');
+
+        })
     }
 
     render() {
         return (
-            <TodoList todos={this.state.todos} addTodo={this.addTodo}/>
+            <TodoList todos={this.state.todos} addTodo={this.addTodo} deleteTodo={this.deleteTodo}/>
         );
     }
 }

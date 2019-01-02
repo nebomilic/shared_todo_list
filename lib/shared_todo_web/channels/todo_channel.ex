@@ -16,7 +16,7 @@ defmodule SharedTodoWeb.TodoChannel do
     broadcasts the new todo element
   """
   def handle_in("add_todo", %{"todo_text" => todo_text}, socket) do
-    new_todo =  %Todo{text: todo_text}
+    new_todo =  %Todo{id: UUID.uuid4, text: todo_text}
     SharedTodo.State.add_todo(:state, new_todo)
     broadcast!(socket, "added_todo", %{body: Poison.encode!(new_todo)})
     {:noreply, socket}
@@ -27,8 +27,9 @@ defmodule SharedTodoWeb.TodoChannel do
     deletes a todo from state
     broadcasts deleted todo's id
   """
-  def handle_in("delete_todo", %{"body" => body}, socket) do
-    broadcast!(socket, "deleted_todo", %{body: body})
+  def handle_in("delete_todo", %{"todo_id" => todo_id}, socket) do
+    SharedTodo.State.delete_todo(:state, todo_id)
+    broadcast!(socket, "deleted_todo", %{body: todo_id})
     {:noreply, socket}
   end
   
