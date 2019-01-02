@@ -35,23 +35,19 @@ defmodule SharedTodo.State do
   # Server API
   
   def handle_call(:get_all_todos, _from, todos) do
-    #IO.inspect(todos)
     {:reply, {:ok, todos}, todos}
   end
   
   def handle_call({:add_todo, %Todo{} = new_todo}, _from, todos) do
-    #IO.inspect(todos)
     {:reply, :ok, todos ++ [new_todo]}
   end
   
   def handle_call({:delete_todo, item_id}, _from, todos) do
-    IO.inspect(todos)
     {:reply, :ok, Enum.filter(todos, fn (item) -> item.id !== item_id end)}
   end
   
   def handle_call({:mark_as_done, item_id}, _from, todos) do
     # TODO
-    IO.inspect(todos)
     {:reply, :ok, Enum.filter(todos, fn (item) -> item.id !== item_id end)}
   end
   
