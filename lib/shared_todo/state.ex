@@ -32,9 +32,14 @@ defmodule SharedTodo.State do
     GenServer.call(server, {:mark_as_done, item_id})
   end
   
+  def unmark_as_done(server, item_id) do
+    GenServer.call(server, {:unmark_as_done, item_id})
+  end
+  
   # Server API
   
   def handle_call(:get_all_todos, _from, todos) do
+    # Possible misuse of web socket here, http request could be more appropriate in this case
     {:reply, {:ok, todos}, todos}
   end
   
@@ -46,9 +51,10 @@ defmodule SharedTodo.State do
     {:reply, :ok, Enum.filter(todos, fn (item) -> item.id !== item_id end)}
   end
   
-  def handle_call({:mark_as_done, item_id}, _from, todos) do
-    # TODO
-    {:reply, :ok, Enum.filter(todos, fn (item) -> item.id !== item_id end)}
+  def handle_call({:mark_as_done, replace}, _from, todos) do
+  def handle_call({:unmark_as_done, replace}, _from, todos) do
+  def handle_call({:rename_item, replace}, _from, todos) do
+    {:reply, :ok, Enum.map(todos, fn item -> if item.id === replace.id do replace else item end end)}
   end
   
    
