@@ -57,7 +57,7 @@ export default class SharedTodoList extends Component {
         this.loadExistingTodos();
         this.channel.on('added_todo', ( msg: any)  => {
             const newTodo:Todo = (JSON.parse(msg.body) as Todo);
-            const updatedTodos = [...this.state.todos, newTodo];
+            const updatedTodos = [newTodo, ...this.state.todos ];
             this.setState({ todos: updatedTodos });
             console.log('New todo added');
         } )

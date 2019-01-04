@@ -44,7 +44,7 @@ defmodule SharedTodo.State do
   end
   
   def handle_call({:add_todo, %Todo{} = new_todo}, _from, todos) do
-    {:reply, :ok, todos ++ [new_todo]}
+    {:reply, :ok,  [new_todo] ++ todos}
   end
   
   def handle_call({:delete_todo, item_id}, _from, todos) do
