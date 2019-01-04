@@ -50,6 +50,19 @@ export default class SharedTodoList extends Component {
         .receive('error', (reasons) => console.log('create failed', reasons) )
         .receive('timeout', () => console.log('Networking issue...') )
     }
+
+    checkTodo = (id: string) => {
+        this.channel.push('check_todo', {todo_id: id}, 10000) 
+        .receive('ok', (msg) => console.log('created message', msg) )
+        .receive('error', (reasons) => console.log('create failed', reasons) )
+        .receive('timeout', () => console.log('Networking issue...') )
+    }
+    uncheckTodo = (id: string) => {
+        this.channel.push('uncheck_todo', {todo_id: id}, 10000) 
+        .receive('ok', (msg) => console.log('created message', msg) )
+        .receive('error', (reasons) => console.log('create failed', reasons) )
+        .receive('timeout', () => console.log('Networking issue...') )
+    }
     
     
     componentWillMount() {
@@ -63,16 +76,32 @@ export default class SharedTodoList extends Component {
         } )
         this.channel.on('deleted_todo', ( msg: any)  => {
             const deletedTodoId:string = msg.body;
-            const updatedTodos = this.state.todos.filter((item) => item.id !== deletedTodoId);
+            const updatedTodos = this.state.todos.filter(item => item.id !== deletedTodoId);
             this.setState({ todos: updatedTodos });
             console.log('A todo was deleted');
+
+        })
+
+        this.channel.on('checked_todo', ( msg: any)  => {
+            const checkedTodoId:string = msg.body;
+            const updatedTodos = this.state.todos.map(item => item.id === checkedTodoId ? 
+                                                              {...item, status: TodoStatus.DONE} : item);
+            this.setState({ todos: updatedTodos });
+            console.log('A todo was checked');
 
         })
     }
 
     render() {
         return (
-            <TodoList todos={this.state.todos} addTodo={this.addTodo} deleteTodo={this.deleteTodo}/>
+            <TodoList 
+                todos={this.state.todos} 
+                addTodo={this.addTodo} 
+                deleteTodo={this.deleteTodo}
+                checkTodo={this.checkTodo}
+                uncheckTodo={this.uncheckTodo}
+                
+                />
         );
     }
 }
