@@ -33,6 +33,17 @@ defmodule SharedTodoWeb.TodoChannel do
     {:noreply, socket}
   end
   
+  @doc """
+    handle deletion of a todo
+    deletes a todo from state
+    broadcasts deleted todo's id
+  """
+  def handle_in("check_todo", %{"todo_id" => todo_id}, socket) do
+    SharedTodo.State.check_todo(:state, todo_id)
+    broadcast!(socket, "checked_todo", %{body: todo_id})
+    {:noreply, socket}
+  end
+  
    @doc """
     returns all todos from the state, doesn't dispatch anything
   """
