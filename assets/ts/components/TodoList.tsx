@@ -28,7 +28,7 @@ const TodoList = (props:Props) => {
                                     />
                             ))}
                         </ul>
-                        <footer>checkout on <a href="https://github.com/nebomilic/shared_todo_list">github</a></footer>
+                        <footer><a href="https://github.com/nebomilic/shared_todo_list">view on github</a></footer>
                     </div>
                 </div>
     );
