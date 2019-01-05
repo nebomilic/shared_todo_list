@@ -18,7 +18,7 @@ export const TodoItem = (props:Props) => {
          onClick={()=> checkTodo(todo.id)}/>
         <span >{todo.text}</span>
     </label>
-    <i class="material-icons clear-button" 
+    <i class="material-icons clear-button float-right" 
         onClick={()=> deleteTodo(todo.id)}>clear</i>
     </li>;
 }
