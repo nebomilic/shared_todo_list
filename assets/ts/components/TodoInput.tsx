@@ -31,7 +31,7 @@ const TodoInput = (props:Props) => {
                 onKeyPress={keyPressHandler}
                 placeholder="What do you want to do?" />
                 <button class="waves-effect waves-light btn" 
-                onClick={()=> this.addTodo(textInput.value)}>
+                onClick={()=> addTodo(textInput.value)}>
                     Add
                 </button>
         </div>
