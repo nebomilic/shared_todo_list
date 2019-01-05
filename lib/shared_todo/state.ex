@@ -52,9 +52,11 @@ defmodule SharedTodo.State do
   end
   
   def handle_call({:check_todo, todo_id}, _from, todos) do
-  #def handle_call({:unmark_as_done, replace}, _from, todos) do
-  #def handle_call({:rename_item, replace}, _from, todos) do
     {:reply, :ok, Enum.map(todos, fn item -> if item.id === todo_id do %Todo{id: item.id, text: item.text, status: 1} else item end end)}
+  end
+  
+  def handle_call({:uncheck_todo, todo_id}, _from, todos) do
+    {:reply, :ok, Enum.map(todos, fn item -> if item.id === todo_id do %Todo{id: item.id, text: item.text, status: 0} else item end end)}
   end
   
    

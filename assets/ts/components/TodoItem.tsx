@@ -13,13 +13,7 @@ export const TodoItem = (props:Props) => {
 
     const {todo, checkTodo, uncheckTodo, deleteTodo} = props;
     const checked = todo.status === TodoStatus.DONE ? true : false;
-    const toggle = (id : string, checked : boolean) => {
-        if (checked) {
-            checkTodo(id);
-        } else {
-            uncheckTodo(id);
-        }
-    }
+    const toggle = (id : string, checked : boolean) => checked ? checkTodo(id) : uncheckTodo(id);
 
     return <li class="collection-item">
     <label>
