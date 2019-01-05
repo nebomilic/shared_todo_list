@@ -9,13 +9,23 @@ interface Props {
 }
 export const TodoItem = (props:Props) => {
 
-    const {todo, checkTodo, deleteTodo} = props;
+    let checkbox: any;
+
+    const {todo, checkTodo, uncheckTodo, deleteTodo} = props;
     const checked = todo.status === TodoStatus.DONE ? true : false;
+    const toggle = (id : string, checked : boolean) => {
+        if (checked) {
+            checkTodo(id);
+        } else {
+            uncheckTodo(id);
+        }
+    }
 
     return <li class="collection-item">
     <label>
         <input type="checkbox" checked={checked}
-         onClick={()=> checkTodo(todo.id)}/>
+         ref={input => checkbox = input}
+         onClick={()=> toggle(todo.id, checkbox.checked)}/>
         <span >{todo.text}</span>
     </label>
     <i class="material-icons clear-button float-right" 

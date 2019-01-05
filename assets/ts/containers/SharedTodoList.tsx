@@ -90,6 +90,15 @@ export default class SharedTodoList extends Component {
             console.log('A todo was checked');
 
         })
+
+        this.channel.on('unchecked_todo', ( msg: any)  => {
+            const checkedTodoId:string = msg.body;
+            const updatedTodos = this.state.todos.map(item => item.id === checkedTodoId ? 
+                                                              {...item, status: TodoStatus.TODO} : item);
+            this.setState({ todos: updatedTodos });
+            console.log('A todo was unchecked');
+
+        })
     }
 
     render() {
