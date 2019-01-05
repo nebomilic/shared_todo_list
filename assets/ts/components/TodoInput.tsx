@@ -1,44 +1,44 @@
 
-import { h, Component} from 'preact';
+import { h } from 'preact';
 interface Props {
     addTodo: Function
 }
-export default class TodoInput extends Component <Props> {
+const TodoInput = (props:Props) => {
     
-    private input : any;
+    let textInput : any;
 
-
-    addTodo = (value : string) => {
+    const addTodo = (value : string) => {
         if (value && value.length > 0) {
-                    this.props.addTodo(value);
-                    this.resetValue(this.input);
+                    props.addTodo(value);
+                    resetValue(textInput);
         }
     }
 
-    resetValue = (element:any) => {
+    const resetValue = (element:any) => {
         element.value = "";
     }
 
-    keyPressHandler = (e: KeyboardEvent) => {
+    const keyPressHandler = (e: KeyboardEvent) => {
         if (e.keyCode === 13) {
-            this.addTodo(this.input.value)
+            addTodo(textInput.value)
         }
     }
 
-    render() {
-        return(  
-            <div class="add-todo-container">
-                <input id="todoInput" 
-                    ref={input => this.input = input}
-                    onKeyPress={this.keyPressHandler}
-                    placeholder="What do you want to do?" />
-                    <button class="waves-effect waves-light btn" 
-                    onClick={()=> this.addTodo(this.input.value)}
-                    >Add</button>
-            </div>
-        );
-    }
+    return(  
+        <div class="add-todo-container">
+            <input id="todoInput" 
+                ref={input => textInput = input}
+                onKeyPress={keyPressHandler}
+                placeholder="What do you want to do?" />
+                <button class="waves-effect waves-light btn" 
+                onClick={()=> this.addTodo(textInput.value)}>
+                    Add
+                </button>
+        </div>
+    );
 }
+
+export default TodoInput;
 
     
 

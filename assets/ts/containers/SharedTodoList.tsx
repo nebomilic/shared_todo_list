@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
-import TodoList from '../components/TodoList';
 import { connectToChannel } from '../utils/socket';
 import { TOPIC, SUBTOPIC } from '../config';
 import { Channel } from 'phoenix';
+import TodoList from '../components/TodoList';
 
 export interface Todo {
     id: string,
@@ -103,7 +103,7 @@ export default class SharedTodoList extends Component {
 
     render() {
         return (
-            <TodoList 
+            <TodoList
                 todos={this.state.todos} 
                 addTodo={this.addTodo} 
                 deleteTodo={this.deleteTodo}

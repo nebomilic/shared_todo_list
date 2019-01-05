@@ -7,7 +7,7 @@ interface Props {
     uncheckTodo: Function,
     todo: Todo
 }
-export const TodoItem = (props:Props) => {
+const TodoItem = (props:Props) => {
 
     let checkbox: any;
 
@@ -15,17 +15,21 @@ export const TodoItem = (props:Props) => {
     const checked = todo.status === TodoStatus.DONE ? true : false;
     const toggle = (id : string, checked : boolean) => checked ? checkTodo(id) : uncheckTodo(id);
 
-    return <li class="collection-item">
-    <label>
-        <input type="checkbox" checked={checked}
-         ref={input => checkbox = input}
-         onClick={()=> toggle(todo.id, checkbox.checked)}/>
-        <span >{todo.text}</span>
-    </label>
-    <i class="material-icons clear-button float-right" 
-        onClick={()=> deleteTodo(todo.id)}>clear</i>
-    </li>;
+    return (
+                <li class="collection-item">
+                    <label>
+                        <input type="checkbox" checked={checked}
+                        ref={input => checkbox = input}
+                        onClick={()=> toggle(todo.id, checkbox.checked)}/>
+                        <span >{todo.text}</span>
+                    </label>
+                    <i class="material-icons clear-button float-right" 
+                        onClick={()=> deleteTodo(todo.id)}>clear</i>
+                </li>
+    );
 }
+
+export default TodoItem;
 
     
 
