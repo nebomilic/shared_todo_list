@@ -9,8 +9,8 @@ import { h, render } from 'preact';
 //
 // Import dependencies
 //
-import 'phoenix_html'
-import '../css/app.css'
+import 'phoenix_html';
+import '../css/app.css';
 
 // Import local files
 //
@@ -19,5 +19,5 @@ import SharedTodoList from './containers/SharedTodoList';
 
 const appElement: any = document.querySelector('#app');
 if (appElement) {
-    render((<SharedTodoList />), appElement);
+    render(<SharedTodoList />, appElement);
 }
