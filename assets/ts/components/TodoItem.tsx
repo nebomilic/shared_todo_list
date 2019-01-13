@@ -8,7 +8,6 @@ interface Props {
 }
 const TodoItem = (props: Props) => {
     let checkbox: any;
-
     const { todo, checkTodo, uncheckTodo, deleteTodo } = props;
     const checked = todo.status === TodoStatus.DONE ? true : false;
     const toggle = (id: string, checked: boolean) =>

@@ -2,7 +2,6 @@ import { h } from 'preact';
 import { Todo } from '../containers/SharedTodoList';
 import TodoItem from './TodoItem';
 import TodoInput from './TodoInput';
-
 interface Props {
     todos: Array<Todo>;
     addTodo: Function;
