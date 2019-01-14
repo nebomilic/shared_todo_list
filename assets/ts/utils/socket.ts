@@ -7,6 +7,7 @@
 // Pass the token on params as below. Or remove it
 // from the params if you are not using authentication.
 import { Socket, Channel } from 'phoenix';
+import { TOPIC, SUBTOPIC } from '../config';
 
 // const socket = new Socket('/socket', {params: {token: (window as any).userToken}})
 
@@ -62,7 +63,7 @@ import { Socket, Channel } from 'phoenix';
 
 // export default socket
 
-export const connectToChannel = (channelName: string): Channel => {
+const connectToChannel = (channelName: string): Channel => {
     const socket = new Socket('/socket', {
         params: { token: (window as any).userToken }
     });
@@ -78,3 +79,14 @@ export const connectToChannel = (channelName: string): Channel => {
         });
     return channel;
 };
+
+export class SharedTodoChannel {
+    private static channel: Channel;
+    static init() {
+        SharedTodoChannel.channel = connectToChannel(`${TOPIC}:${SUBTOPIC}`);
+    }
+    static get() {
+        if (!SharedTodoChannel.channel) this.init();
+        return SharedTodoChannel.channel;
+    }
+}

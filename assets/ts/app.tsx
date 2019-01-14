@@ -11,13 +11,22 @@ import { h, render } from 'preact';
 //
 import 'phoenix_html';
 import '../css/app.css';
+import store from './store';
 
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:
-import SharedTodoList from './containers/SharedTodoList';
 
-const appElement: any = document.querySelector('#app');
-if (appElement) {
-    render(<SharedTodoList />, appElement);
+import { Provider } from 'redux-zero/preact';
+import Main from './containers/Main';
+
+const App = () => (
+    <Provider store={store}>
+        <Main />
+    </Provider>
+);
+
+const appHolder: any = document.querySelector('#app');
+if (appHolder) {
+    render(<App />, appHolder);
 }

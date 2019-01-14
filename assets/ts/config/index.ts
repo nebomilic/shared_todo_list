@@ -1,3 +1,3 @@
 // channel config
-export const TOPIC = 'todo';
-export const SUBTOPIC = 'edit';
+export const TOPIC: string = 'todo';
+export const SUBTOPIC: string = 'edit';
