@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { Todo, TodoStatus } from '../containers/SharedTodoList';
+import { TodoStatus, Todo } from '../interfaces';
 interface Props {
     deleteTodo: Function;
     checkTodo: Function;

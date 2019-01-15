@@ -19,7 +19,8 @@ import store from './store';
 
 import { Provider } from 'redux-zero/preact';
 import Main from './containers/Main';
-
+import { SharedTodoChannel } from './utils/socket';
+SharedTodoChannel.init();
 const App = () => (
     <Provider store={store}>
         <Main />

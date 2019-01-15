@@ -1,18 +1,8 @@
 import { h } from 'preact';
 import actions from '../actions';
-import { Connect, connect } from 'redux-zero/preact';
+import { connect } from 'redux-zero/preact';
 import SharedTodoList from './SharedTodoList';
-
-export interface Todo {
-    id: string;
-    text: string;
-    status: TodoStatus;
-}
-
-export enum TodoStatus {
-    TODO = 0,
-    DONE = 1
-}
+import { Todo } from '../interfaces';
 
 export interface State {
     todos: Array<Todo>;

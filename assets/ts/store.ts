@@ -1,6 +1,6 @@
 import createStore from 'redux-zero';
-import { Todo } from './containers/SharedTodoList';
 import { LOADING } from './const';
+import { Todo } from './interfaces';
 
 interface State {
     todos: Array<Todo>;

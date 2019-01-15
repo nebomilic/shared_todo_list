@@ -1,21 +1,6 @@
 import { h, Component } from 'preact';
 import TodoList from '../components/TodoList';
-import { SharedTodoChannel } from '../utils/socket';
-
-export interface Todo {
-    id: string;
-    text: string;
-    status: TodoStatus;
-}
-
-export enum TodoStatus {
-    TODO = 0,
-    DONE = 1
-}
-
-export interface State {
-    todos: Array<Todo>;
-}
+import { Todo } from '../interfaces';
 
 interface Props {
     addTodo: Function;
@@ -25,59 +10,14 @@ interface Props {
     getAllTodos: Function;
     todos: Array<Todo>;
 }
+
+export interface State {
+    todos: Array<Todo>;
+}
 export default class SharedTodoList extends Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        console.log('I am in constructor !!!');
-    }
-
-    state: State = { todos: [] };
-
-    loadExistingTodos = () => {
-        SharedTodoChannel.get()
-            .push('get_all_todos', {}, 10000)
-            .receive('ok', (msg: any) => {
-                const todos: Array<Todo> = JSON.parse(msg.body) as Array<Todo>;
-                this.setState({ todos: todos });
-            })
-            .receive('error', reasons => console.log('create failed', reasons))
-            .receive('timeout', () => console.log('Networking issue...'));
-    };
-
-    addTodo = (text: string) => {
-        this.props.addTodo();
-        SharedTodoChannel.get()
-            .push('add_todo', { todo_text: text }, 10000)
-            .receive('ok', msg => console.log('created message', msg))
-            .receive('error', reasons => console.log('create failed', reasons))
-            .receive('timeout', () => console.log('Networking issue...'));
-    };
-
-    deleteTodo = (id: string) => {
-        SharedTodoChannel.get()
-            .push('delete_todo', { todo_id: id }, 10000)
-            .receive('ok', msg => console.log('created message', msg))
-            .receive('error', reasons => console.log('create failed', reasons))
-            .receive('timeout', () => console.log('Networking issue...'));
-    };
-
-    checkTodo = (id: string) => {
-        SharedTodoChannel.get()
-            .push('check_todo', { todo_id: id }, 10000)
-            .receive('ok', msg => console.log('created message', msg))
-            .receive('error', reasons => console.log('create failed', reasons))
-            .receive('timeout', () => console.log('Networking issue...'));
-    };
-    uncheckTodo = (id: string) => {
-        SharedTodoChannel.get()
-            .push('uncheck_todo', { todo_id: id }, 10000)
-            .receive('ok', msg => console.log('created message', msg))
-            .receive('error', reasons => console.log('create failed', reasons))
-            .receive('timeout', () => console.log('Networking issue...'));
-    };
-
     componentWillMount() {
-        this.loadExistingTodos();
+        this.props.getAllTodos();
+        /*this.loadExistingTodos();
         SharedTodoChannel.get().on('added_todo', (msg: any) => {
             const newTodo: Todo = JSON.parse(msg.body) as Todo;
             const updatedTodos = [newTodo, ...this.state.todos];
@@ -113,17 +53,17 @@ export default class SharedTodoList extends Component<Props, State> {
             );
             this.setState({ todos: updatedTodos });
             console.log('A todo was unchecked');
-        });
+        });*/
     }
 
     render() {
         return (
             <TodoList
-                todos={this.state.todos}
-                addTodo={this.addTodo}
-                deleteTodo={this.deleteTodo}
-                checkTodo={this.checkTodo}
-                uncheckTodo={this.uncheckTodo}
+                todos={this.props.todos}
+                addTodo={this.props.addTodo}
+                deleteTodo={this.props.deleteTodo}
+                checkTodo={this.props.checkTodo}
+                uncheckTodo={this.props.uncheckTodo}
             />
         );
     }

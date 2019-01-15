@@ -86,7 +86,6 @@ export class SharedTodoChannel {
         SharedTodoChannel.channel = connectToChannel(`${TOPIC}:${SUBTOPIC}`);
     }
     static get() {
-        if (!SharedTodoChannel.channel) this.init();
         return SharedTodoChannel.channel;
     }
 }
