@@ -1,5 +1,10 @@
 # SharedTodo
 
+This is a simple demo for usage of Phoenix Channels with Preact & Typescript.
+The app allows multiple visitors to edit the todo list simultaneously in realtime.
+
+## Getting Started
+
 To get the app running:
 
   * Install dependencies with `mix deps.get`
