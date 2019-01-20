@@ -9,11 +9,11 @@ export interface State {
 }
 
 interface Props {
-    addTodo: Function;
-    deleteTodo: Function;
-    checkTodo: Function;
-    uncheckTodo: Function;
-    getAllTodos: Function;
+    _addTodo: Function;
+    _deleteTodo: Function;
+    _checkTodo: Function;
+    _uncheckTodo: Function;
+    _getAllTodos: Function;
     todos: Array<Todo>;
 }
 
@@ -25,19 +25,19 @@ const Main = connect(
 )(
     ({
         todos,
-        addTodo,
-        deleteTodo,
-        checkTodo,
-        uncheckTodo,
-        getAllTodos
+        _addTodo,
+        _deleteTodo,
+        _checkTodo,
+        _uncheckTodo,
+        _getAllTodos
     }: Props) => (
         <SharedTodoList
             todos={todos}
-            addTodo={addTodo}
-            deleteTodo={deleteTodo}
-            checkTodo={checkTodo}
-            uncheckTodo={uncheckTodo}
-            getAllTodos={getAllTodos}
+            addTodo={_addTodo}
+            deleteTodo={_deleteTodo}
+            checkTodo={_checkTodo}
+            uncheckTodo={_uncheckTodo}
+            getAllTodos={_getAllTodos}
         />
     )
 );

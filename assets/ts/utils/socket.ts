@@ -80,12 +80,7 @@ const connectToChannel = (channelName: string): Channel => {
     return channel;
 };
 
-export class SharedTodoChannel {
-    private static channel: Channel;
-    static init() {
-        SharedTodoChannel.channel = connectToChannel(`${TOPIC}:${SUBTOPIC}`);
-    }
-    static get() {
-        return SharedTodoChannel.channel;
-    }
-}
+// should be called only once in the app
+// otherwise, multiple channels can be created, which would cause error
+export const initializeSocketConnection = () =>
+    connectToChannel(`${TOPIC}:${SUBTOPIC}`);
