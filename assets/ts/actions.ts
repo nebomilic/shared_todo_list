@@ -1,7 +1,7 @@
 import Store from 'redux-zero/interfaces/Store';
 import { State } from './containers/SharedTodoList';
 import { TodoStatus, Todo } from './interfaces';
-import { SocketActionReturnType } from './middleware';
+import { SocketAction } from './middleware';
 
 const MESSAGE_GET_ALL_TODOS: string = 'get_all_todos';
 const MESSAGE_ADD_TODO: string = 'add_todo';
@@ -10,37 +10,32 @@ const MESSAGE_CHECK_TODO: string = 'check_todo';
 const MESSAGE_UNCHECK_TODO: string = 'uncheck_todo';
 
 const actions: any = (_store: Store) => ({
-    _getAllTodos(_state: State): SocketActionReturnType {
-        console.log('getting all todos');
+    _getAllTodos(_state: State): SocketAction {
         return {
             payload: {},
             messageName: MESSAGE_GET_ALL_TODOS,
             nextActionName: 'getAllTodosHandleResult'
         };
     },
-    _addTodo(_state: State, todoText: string): SocketActionReturnType {
-        console.log('***** adding! alright! ****');
+    _addTodo(todoText: string): SocketAction {
         return {
             payload: { todo_text: todoText },
             messageName: MESSAGE_ADD_TODO
         };
     },
-    _deleteTodo(_state: State, todoId: string) {
-        console.log('***** deleting todo! alright! ****');
+    _deleteTodo(todoId: string): SocketAction {
         return {
             payload: { todo_id: todoId },
             messageName: MESSAGE_DELETE_TODO
         };
     },
-    _checkTodo(_state: State, todoId: string) {
-        console.log('***** checking todo! alright! ****');
+    _checkTodo(todoId: string): SocketAction {
         return {
             payload: { todo_id: todoId },
             messageName: MESSAGE_CHECK_TODO
         };
     },
-    _uncheckTodo(_state: State, todoId: string) {
-        console.log('***** checking todo! alright! ****');
+    _uncheckTodo(todoId: string): SocketAction {
         return {
             payload: { todo_id: todoId },
             messageName: MESSAGE_UNCHECK_TODO
@@ -49,7 +44,6 @@ const actions: any = (_store: Store) => ({
     todoWasAdded: (state: State, msg: any) => {
         const newTodo: Todo = JSON.parse(msg.body) as Todo;
         const updatedTodos = [newTodo, ...state.todos];
-        console.log('New todo added');
         return { todos: updatedTodos };
     },
     todoWasDeleted: (state: State, msg: any) => {
