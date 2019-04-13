@@ -12,5 +12,3 @@ To get the app running:
   * Start Phoenix endpoint with `mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Running demo can be seen [here](http://35.159.21.8:4000/).
